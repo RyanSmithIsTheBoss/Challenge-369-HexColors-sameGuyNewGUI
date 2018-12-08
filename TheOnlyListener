@@ -1,0 +1,61 @@
+import java.awt.Canvas;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+public class TheOnlyListener implements DocumentListener{
+
+	logic myLogic;
+	JTextField redf;
+	JTextField bluef;
+	JTextField greenf;
+	JLabel hexLabel;
+	Canvas canvas;
+	
+	public TheOnlyListener(logic myLogic, JTextField redTextField, JTextField greenTextField, JTextField blueTextField, JLabel hexLabel, Canvas canvas) {
+		this.myLogic = myLogic;
+		this.redf = redTextField;
+		this.bluef = blueTextField;
+		this.greenf = greenTextField;
+		this.hexLabel = hexLabel;
+		this.canvas = canvas;
+	}
+	
+	public void updateTextField() {
+		String redVal = redf.getText();
+		String greenVal = greenf.getText();
+		String blueVal = bluef.getText();
+		
+		//filter 
+		String hexValues = myLogic.calculateHexValues(redVal, blueVal, greenVal);
+		hexLabel.setText(" Hex Value: "+ hexValues);
+		updateColorPanel(hexValues);
+	}
+	
+	private void updateColorPanel(String str) {
+		canvas.setBackground(Color.decode(str));
+	}
+
+	
+	
+	@Override
+	public void changedUpdate(DocumentEvent arg0) {
+		this.updateTextField();
+		
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent arg0) {
+		this.updateTextField();
+		
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent arg0) {
+		this.updateTextField();
+		
+	}
+
+}
