@@ -1,0 +1,66 @@
+
+public class logic {
+
+	public logic() {
+		
+	}
+	
+	public String calculateHexValues(String redVal, String blueVal, String greenVal) {
+		
+		//Convert to Int
+		int redInt = checkIfInt(redVal);
+		int blueInt = checkIfInt(blueVal);
+		int greenInt = checkIfInt(greenVal);
+		
+		//Filter Vals
+		redInt=this.filtterUacceptedVals(redInt);
+		blueInt=this.filtterUacceptedVals(blueInt);
+		greenInt=this.filtterUacceptedVals(greenInt);
+		
+		//Convert to Hex
+		String redHex = Integer.toHexString(redInt);
+		String blueHex = Integer.toHexString(blueInt);
+		String greenHex =Integer.toHexString(greenInt);
+		
+		//Append Zeros
+		redHex = this.appendZero(redHex);
+		blueHex = this.appendZero(blueHex);
+		greenHex = this.appendZero(greenHex);
+		
+		//Capitalize all Letters
+		redHex = redHex.toUpperCase();
+		blueHex = blueHex.toUpperCase();
+		greenHex = greenHex.toUpperCase();
+		//return
+		return("#"+redHex+blueHex+greenHex);
+	}
+	
+	private int filtterUacceptedVals(int val) {
+		if(val<0) {
+			return 0;
+		}else if(val>255) {
+			return 255;
+		}else return val;
+		
+	}
+	
+	private String appendZero(String str) {
+		if(str.length()==1) {
+			return "0"+str;
+		}else {
+		return str;}
+	}
+	
+	private int checkIfInt(String str) {
+		int intVal=0;
+		try {
+			intVal = Integer.parseInt(str);
+		}catch(Exception e) {
+			return 0;
+		}
+		return intVal;
+	}
+	
+	
+	
+}
