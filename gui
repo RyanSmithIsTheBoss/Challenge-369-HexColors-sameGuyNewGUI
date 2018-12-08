@@ -1,0 +1,80 @@
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class gui extends JFrame{
+	public gui() {
+		//Initial Setup
+		setSize(450,150);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Challenge#369 HexColors sameGuyNewGUI");
+		setResizable(false);
+
+		
+		//Define Components: Inputs
+		int textFieldLength = 10;
+		JTextField redTextField = new JTextField(textFieldLength);
+		JTextField blueTextField = new JTextField(textFieldLength);
+		JTextField greenTextField = new JTextField(textFieldLength);
+		redTextField.setText("0");
+		greenTextField.setText("0");
+		blueTextField.setText("0");
+		
+		//Define Components: Outputs
+		//Dimension labelSize = new Dimension(textFieldLength*3, 10);
+		JLabel hexLabel = new JLabel(" Hex Value: ");
+		JLabel redLabel = new JLabel("Red");
+		JLabel blueLabel = new JLabel("Blue");
+		JLabel greenLabel = new JLabel("Green");
+		
+		//Panel
+		JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(200, 125));
+		panel.setLayout(new GridLayout(0, 2));
+		panel.add(redTextField);
+		panel.add(redLabel);
+		panel.add(blueTextField);
+		panel.add(blueLabel);
+		panel.add(greenTextField);
+		panel.add(greenLabel);
+		panel.add(hexLabel);
+		
+		//Color Panel
+		JPanel colorPanel = new JPanel();
+		colorPanel.setBackground(Color.BLACK);
+		colorPanel.setMinimumSize(new Dimension(150,150));
+		Canvas canvas = new Canvas();
+		canvas.setSize(110, 110);
+		colorPanel.add(canvas);
+		
+		//Main Panel
+		JPanel parentPanel = new JPanel();
+		parentPanel.setLayout(new BorderLayout());
+		parentPanel.add(panel, BorderLayout.LINE_START);
+		parentPanel.add(colorPanel,BorderLayout.LINE_END);
+		
+		
+		//Logic
+		logic myLogic = new logic();
+		
+		//Listeners
+		TheOnlyListener onlyOne = new TheOnlyListener(myLogic, redTextField, greenTextField, blueTextField, hexLabel, canvas);
+		redTextField.getDocument().addDocumentListener(onlyOne);
+		blueTextField.getDocument().addDocumentListener(onlyOne);
+		greenTextField.getDocument().addDocumentListener(onlyOne);
+		
+		//Set hexLabel 
+		onlyOne.updateTextField();
+		
+		//Finalize
+		add(parentPanel);
+		setVisible(true);
+	}
+}
